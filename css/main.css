@@ -1,6 +1,45 @@
+/* Import Stuff here */
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
+
+/* CSS reset */
+
+* {
+	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+	animation: page-load 1000ms;
+}
+
+/* Main body styling */
+
+body {
+	background: black;
+	display: flex;
+	justify-content: center;
+	transition: background 1s linear;
+	--nav-load-time: 300ms;
+	--nav-link-load-time: 500ms;
+  	--article-load-delay: calc(var(--nav-load-time) + var(--nav-link-load-time) + 100ms)
+}
+
+/* Navigation menu styling */
+
+nav{
+    position: fixed;
+    top: 0;
+    width: 100%;
+	padding-left: 2.5%;
+	padding-right: 2.5%;
+	height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+	animation: nav-load var(--nav-load-time) ease-in;
+	z-index: 2;
+}
 
 .heading{
 	font-family: 'Shadows Into Light', cursive;
@@ -14,6 +53,8 @@
 	font-size: 40px;
 }
 
+/* Video element's div styling */
+
 #face{
     display: flex;
     justify-content: center;
@@ -23,7 +64,10 @@
     margin-top: 100px;
 }
 
+/* Video element/box styling */
+
 #video{
+	width: 720px;
 	box-shadow: 10px 10px 15px rgb(0, 0, 0);
 	border-radius: 3%;
 	animation-name: nav-link-load;
@@ -32,50 +76,76 @@
 	animation-delay: var(--article-load-delay);
 	animation-fill-mode: forwards;
 	transform: scale(0);
+	margin-top: 20px;
 }
+
+/* Canvas styling for dection box */
 
 canvas{
     position: absolute;
 	color: orange;
 }
 
-* {
-	box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0;
-	animation: page-load 1000ms;
+/* Div styling which includes video and text box */
+
+#mainArea{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-body {
-	background: black;
+/* Text box styling for jokes etc. */
+
+#joke{
+	margin: 50px 0 50px 0;
+	height: 100px;
+	width: auto;
+	/* max-width: 720px; */
+	min-width: 640px;
+	background-color: rgba(83, 188, 197, 0.486);
+	padding: 20px;
+	border-radius: 20px;
+	animation-name: nav-link-load;
+	animation-duration: var(--nav-link-load-time);
+	animation-timing-function: ease-in;
+	animation-delay: var(--article-load-delay);
+	animation-fill-mode: forwards;
+	transform: scale(0);
+	font-size: 20px;
+	color: antiquewhite;
 	display: flex;
+	align-items:center;
 	justify-content: center;
-	--nav-load-time: 300ms;
-	--nav-link-load-time: 500ms;
-  	--article-load-delay: calc(var(--nav-load-time) + var(--nav-link-load-time) + 100ms)
+	flex-direction: column;
+	font-family: 'Source Code Pro', monospace;
+	text-align: center;
 }
+
+/* Background styling when in dark mode */
 
 #bck.dark {
-	background: #292C35;
-	transition: background 1s linear;
+	background: linear-gradient(132deg, #000000, #242424, #000000);
+	animation: Gradient 10s ease infinite;
+	background-size: 400% 400%;
+	position: relative;
+	height: auto;
+	width: 100%;
+	overflow: hidden;
+	padding:0;
+	margin:0;
+	display: flex;
+	justify-content: center;
+	z-index: 1;
 }
+
+/* dark mode toggle checkbox */
 
 .checkbox {
 	opacity: 0;
 	position: absolute;
 }
 
-nav{
-    position: fixed;
-    top: 0;
-    width: 95vw;
-    height: 5%;
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
-	animation: nav-load var(--nav-load-time) ease-in;
-}
+/* Dark mode toggle switch styling */
 
 .label {
     margin-top: 60px;
@@ -118,13 +188,16 @@ nav{
 	color: #f39c12;
 }
 
+/* Backgroud styling when in light mode */
+
 .background {
 	background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
-	transition: background 1s linear;
+	transition: background-color 1s linear;
 	animation: Gradient 15s ease infinite;
 	background-size: 400% 400%;
 	position: relative;
-	height: 100vh;
+	height: auto;
+	min-height: 100vh;
 	width: 100%;
 	overflow: hidden;
 	padding:0;
@@ -133,6 +206,8 @@ nav{
 	justify-content: center;
 	z-index: 1;
   }
+
+  /* Background elements animation and styling */
   
   .cube {
 	position: absolute;
@@ -174,6 +249,8 @@ nav{
 	top: 10vh;
   }
   
+/* Keyframes for all the animations exists HERE! */
+
   @keyframes Gradient {
 	0% {
 	  background-position: 0% 50%;
@@ -194,8 +271,7 @@ nav{
 	  transform: scale(20) rotate(960deg) translate(-50%, -50%);
 	  opacity: 0;
 	}
-  }
-  
+  } 
 
 @keyframes nav-load {
 	0% {
@@ -228,5 +304,29 @@ nav{
   
 	100% {
 	  opacity: 1;
+	}
+  }
+
+  /* Media Queries */
+
+  @media only screen and (max-width: 670px) {
+	#video{
+		width: 500px;
+	}
+	#joke{
+		width: auto;
+		max-width: 500px;
+		min-width: 500px;
+	}
+  }
+
+  @media only screen and (max-width: 530px) {
+	#video{
+		width: 350px;
+	}
+	#joke{
+		width: auto;
+		max-width: 350px;
+		min-width: 350px;
 	}
   }

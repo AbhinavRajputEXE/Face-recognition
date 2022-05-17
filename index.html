@@ -9,13 +9,14 @@
   <title>Document</title>
 </head>
 <body>
+  <!-- Animated Background Code -->
   <div class="background" id="bck">
     <div class="cube"></div>
     <div class="cube"></div>
     <div class="cube"></div>
     <div class="cube"></div>
     <div class="cube"></div>
- 
+ <!-- Navigation Bar Code -->
     <nav>
       <p class="heading">Face<span class="navHeading">.exe</span></p>
       <input type="checkbox" class="checkbox" id="chk" />
@@ -25,10 +26,18 @@
           <div class="ball"></div>
       </label>
     </nav>
-    <div id="face">
-      <video id="video" width="720"  autoplay muted></video>
+    <div id="mainArea">
+      <!-- Video element/Box code -->
+      <div id="face">
+        <video id="video"  autoplay muted></video>
+      </div>
+      <!-- TextArea Code for jokes/texts -->
+      <div id="joke">
+        <p>Are you sad? Here's a joke for you:</p>
+      </div>
     </div>
   </div>
+  <!-- Included Javascritp-->
   <script defer src="js/face-api.min.js"></script>
   <script defer src="js/script.js"></script>
   <script src="https://kit.fontawesome.com/da4c88c6a6.js" crossorigin="anonymous"></script>
