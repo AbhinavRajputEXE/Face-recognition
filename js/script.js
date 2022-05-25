@@ -1,5 +1,6 @@
 /* Declarations */
 const video = document.getElementById('video')
+const imageUpload = document.getElementById('imageUpload')
 
 /* Promises */
 
@@ -9,6 +10,64 @@ Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
   faceapi.nets.faceExpressionNet.loadFromUri('/models')
 ]).then(startVideo)
+
+Promise.all([
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+]).then(start)
+
+async function start() {
+  const container = document.getElementById('canvas2')
+  container.style.position = 'relative'
+  const labeledFaceDescriptors = await loadLabeledImages()
+  const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+  let image
+  let canvas2
+  imageUpload.addEventListener('change', async () => {
+    if (image) image.remove()
+    if (canvas2) canvas2.remove()
+    let media  = imageUpload.files[0];
+    var element = document.getElementById('imageUp'),
+        style = window.getComputedStyle(element),
+        val2 = style.getPropertyValue('height'),
+        val = style.getPropertyValue('width');
+    let width = parseInt(val, 10)
+    let height = parseInt(val2, 10)
+    image = await faceapi.bufferToImage(media)
+    image.width = width
+    image.height = height
+    container.append(image)
+    canvas2 = faceapi.createCanvasFromMedia(image)
+    container.append(canvas2)
+    const displaySize = { width: image.width, height: image.height }
+    faceapi.matchDimensions(canvas2, displaySize)
+    const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
+    const resizedDetections = faceapi.resizeResults(detections, displaySize)
+    const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+    results.forEach((result, i) => {
+      const box = resizedDetections[i].detection.box
+      const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString(), boxColor: 'green' })
+      drawBox.draw(canvas2)
+    })
+  })
+}
+
+function loadLabeledImages() {
+  const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+  return Promise.all(
+    labels.map(async label => {
+      const descriptions = []
+      for (let i = 1; i <= 2; i++) {
+        const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/WebDevSimplified/Face-Recognition-JavaScript/master/labeled_images/${label}/${i}.jpg`)
+        const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+        descriptions.push(detections.descriptor)
+      }
+
+      return new faceapi.LabeledFaceDescriptors(label, descriptions)
+    })
+  )
+}
 
 /* Functiom to srart and show video from the webcam */
 
@@ -25,7 +84,15 @@ function startVideo() {
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video)
   document.getElementById("face").append(canvas)
-  const displaySize = { width: 720, height: 560 }
+  // let width = document.getElementById("video").style.width;
+  // let x = parseInt(width, 10)
+  var element = document.getElementById('video'),
+        style = window.getComputedStyle(element),
+        val = style.getPropertyValue('width'),
+        val2 = style.getPropertyValue('height');
+  let width = parseInt(val, 10)
+  let height = parseInt(val2, 10)
+  const displaySize = { width: width, height: height }
   faceapi.matchDimensions(canvas, displaySize)
   setInterval(async () => {
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
@@ -53,6 +120,8 @@ setInterval(async()=>{
   ];
     if(sad>=0.7) document.getElementById("joke").innerHTML = jokeArray[Math.floor(Math.random() * jokeArray.length)];
     else if(happy>=0.8) document.getElementById("joke").innerHTML = "Are you happy? 😃 You should be SAD lol!";
+    else if(surprised>=0.8) document.getElementById("joke").innerHTML = "Why are you surprised? 🧐";
+    else if(angry>=0.8) document.getElementById("joke").innerHTML = "Anger is not the solution to anything!! Stay calm 😌";
     else document.getElementById("joke").innerHTML = "You look fine today!";
 },5000)
 
