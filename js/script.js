@@ -61,7 +61,7 @@ async function start() {
 /* It matches the name from array/database to the name of the models to mark correct names in the image */
 
 function loadLabeledImages() {
-  const labels = ['leonardo','robert_pattinson','chris_evans','tom_cruse']
+  const labels = ['leonardo','robert_pattinson','chris_evans','tom_cruse','robert_downey','johnny_depp','will_smith']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
