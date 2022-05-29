@@ -25,15 +25,16 @@ async function start() {
   let image
   let canvas2
   imageUpload.addEventListener('change', async () => {
+    document.getElementById('imageUp').style.display='block'
     if (image) image.remove()
     if (canvas2) canvas2.remove()
     let media  = imageUpload.files[0];
     var element = document.getElementById('imageUp'),
         style = window.getComputedStyle(element),
-        val2 = style.getPropertyValue('height'),
-        val = style.getPropertyValue('width');
-    let width = parseInt(val, 10)
-    let height = parseInt(val2, 10)
+        heightVal = style.getPropertyValue('height'),
+        widthVal = style.getPropertyValue('width');
+    let width = parseInt(widthVal, 10)
+    let height = parseInt(heightVal, 10)
     image = await faceapi.bufferToImage(media)
     image.width = width
     image.height = height
@@ -54,12 +55,12 @@ async function start() {
 }
 
 function loadLabeledImages() {
-  const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+  const labels = ['black_widow','captian_america','thor','tony_stark','hawkeye','captian_marvel','jim_rhodes']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
       for (let i = 1; i <= 2; i++) {
-        const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/WebDevSimplified/Face-Recognition-JavaScript/master/labeled_images/${label}/${i}.jpg`)
+        const img = await faceapi.fetchImage(`https://storage.googleapis.com/face-exe.appspot.com/${label}.jpeg`)
         const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
         descriptions.push(detections.descriptor)
       }
@@ -116,13 +117,28 @@ setInterval(async()=>{
       "Why do we tell actors to break a leg?....Because every play has a cast.",
       "Did you hear about the claustrophobic astronaut?.....He just needed a little space.",
       "Why don't scientists trust atoms?....Because they make up everything.",
-      "Why did the chicken go to the séance?....To get to the other side."
+      "Why did the chicken go to the séance?....To get to the other side.",
+      "Though I enjoy the sport, I could never date a tennis player. Love means nothing to them.",
+      "Got a PS5 for my little brother. Best trade I've ever done!",
+      "I finally decided to sell my vacuum cleaner. All it was doing was gathering dust!",
+      "What do you call a Frenchman wearing sandals? Phillipe Phillope.",
+      "Where do you find a cow with no legs? Right where you left it."
   ];
-    if(sad>=0.7) document.getElementById("joke").innerHTML = jokeArray[Math.floor(Math.random() * jokeArray.length)];
-    else if(happy>=0.8) document.getElementById("joke").innerHTML = "Are you happy? 😃 You should be SAD lol!";
-    else if(surprised>=0.8) document.getElementById("joke").innerHTML = "Why are you surprised? 🧐";
-    else if(angry>=0.8) document.getElementById("joke").innerHTML = "Anger is not the solution to anything!! Stay calm 😌";
-    else document.getElementById("joke").innerHTML = "You look fine today!";
+    if(sad>=0.7) {
+      document.getElementById("joke").style.background='rgba(215, 208, 19, 0.486)';
+      document.getElementById("joke").innerHTML = "Why are you sad? 😟 here is joke to cheer you up!! <br>" + jokeArray[Math.floor(Math.random() * jokeArray.length)];}
+    else if(happy>=0.8) {
+      document.getElementById("joke").style.background='rgba(98, 231, 64, 0.486)';
+      document.getElementById("joke").innerHTML = "Are you happy? Good 😃 No medicine cures what happiness cannot.";}
+    else if(surprised>=0.8) {
+      document.getElementById("joke").style.background='rgba(251, 161, 27, 0.486)';
+      document.getElementById("joke").innerHTML = "Why are you surprised? 🧐";}
+    else if(angry>=0.8) {
+      document.getElementById("joke").style.background='rgba(197, 92, 83, 0.486)';
+      document.getElementById("joke").innerHTML = "Anger is not the solution to anything!! Stay calm 😌 <br> To be angry is to let others mistakes punish yourself... <i>Buddha</i>";}
+    else {
+      document.getElementById("joke").style.background='rgba(83, 188, 197, 0.486)';
+      document.getElementById("joke").innerHTML = "You look fine today! 🙂";}
 },5000)
 
 /* DARK MODE CODE */

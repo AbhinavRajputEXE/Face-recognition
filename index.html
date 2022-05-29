@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="css/main.scss">
   <title>Document</title>
 </head>
+
 <body>
   <!-- Animated Background Code -->
   <div class="background" id="bck">
@@ -16,28 +18,38 @@
     <div class="cube"></div>
     <div class="cube"></div>
     <div class="cube"></div>
- <!-- Navigation Bar Code -->
+    <!-- Navigation Bar Code -->
     <nav>
       <p class="heading">Face<span class="navHeading">.exe</span></p>
       <input type="checkbox" class="checkbox" id="chk" />
       <label class="label" for="chk">
-          <i class="fas fa-moon"></i>
-          <i class="fas fa-sun"></i>
-          <div class="ball"></div>
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+        <div class="ball"></div>
       </label>
     </nav>
     <div id="mainArea">
       <!-- Video element/Box code -->
       <div id="face">
-        <video id="video"  autoplay muted></video>
+        <video id="video" autoplay muted></video>
       </div>
       <!-- TextArea Code for jokes/texts -->
       <div id="joke">
         <p>Hello!🙂</p>
       </div>
     </div>
+    <div id="buttons">
+      <div id="uploadFire">
+        <label for="photo" class="custom-file-upload">
+          <i class="fa fa-cloud-upload"></i> Choose File
+        </label>
+        <i class="fas fa-angle-double-right" id="arrow"></i>
+        <input type="file" id="photo" />
+        <button id="btn" onclick="uploadImage()">Upload File</button>
+      </div>
+      <button id="btn" onclick="document.getElementById('imageUpload').click()">Select Image</button>
+    </div>
     <div id="imageUp">
-      <button id="btn" onclick="document.getElementById('imageUpload').click()">Upload Image</button>
       <div id="canvas2">
         <input type="file" id="imageUpload" style="display:none">
       </div>
@@ -48,4 +60,40 @@
   <script defer src="js/script.js"></script>
   <script src="https://kit.fontawesome.com/da4c88c6a6.js" crossorigin="anonymous"></script>
 </body>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyCBudhxLqtBCxU1EfBP7cz-Idnk1UB6Pr8",
+    authDomain: "face-exe.firebaseapp.com",
+    projectId: "face-exe",
+    storageBucket: "face-exe.appspot.com",
+    messagingSenderId: "775103593036",
+    appId: "1:775103593036:web:26a4b38604b2a1a06312e9",
+    measurementId: "G-JW991GR52N"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  console.log(firebase);
+
+  function uploadImage() {
+    const ref = firebase.storage().ref();
+    const file = document.querySelector("#photo").files[0];
+    const name = +new Date() + "-" + file.name;
+    const metadata = {
+      contentType: file.type
+    };
+    const task = ref.child(name).put(file, metadata);
+    task
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
+        console.log(url);
+        alert("Image Uploaded")
+        document.querySelector("#image").src = url;
+      })
+      .catch(console.error);
+  }
+
+</script>
+
 </html>
