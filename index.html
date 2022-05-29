@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Header CODE -->
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +13,7 @@
 </head>
 
 <body>
+
   <!-- Animated Background Code -->
   <div class="background" id="bck">
     <div class="cube"></div>
@@ -18,6 +21,7 @@
     <div class="cube"></div>
     <div class="cube"></div>
     <div class="cube"></div>
+
     <!-- Navigation Bar Code -->
     <nav>
       <p class="heading">Face<span class="navHeading">.exe</span></p>
@@ -28,6 +32,8 @@
         <div class="ball"></div>
       </label>
     </nav>
+
+    <!-- Main home page area that contain video element -->
     <div id="mainArea">
       <!-- Video element/Box code -->
       <div id="face">
@@ -38,31 +44,44 @@
         <p>Hello!🙂</p>
       </div>
     </div>
+
+    <!-- Select file, Select Image, and Upload image BUTTONS code -->
     <div id="buttons">
-      <div id="uploadFire">
-        <label for="photo" class="custom-file-upload">
-          <i class="fa fa-cloud-upload"></i> Choose File
-        </label>
-        <i class="fas fa-angle-double-right" id="arrow"></i>
-        <input type="file" id="photo" />
-        <button id="btn" onclick="uploadImage()">Upload File</button>
+      <div id="buttonsBox">
+        <p id="textAboveButtons">Upload image on server</p>
+        <div id="uploadFire">
+          <label for="photo" class="custom-file-upload">
+            <i class="fa fa-cloud-upload"></i> Choose File
+          </label>
+          <i class="fas fa-angle-double-right" id="arrow"></i>
+          <input type="file" id="photo" />
+          <button id="btn" onclick="uploadImage()">Upload File</button>
+        </div>
       </div>
       <button id="btn" onclick="document.getElementById('imageUpload').click()">Select Image</button>
     </div>
+
+    <!-- code to create canvas to show selected image -->
     <div id="imageUp">
       <div id="canvas2">
         <input type="file" id="imageUpload" style="display:none">
       </div>
     </div>
+
   </div>
+
   <!-- Included Javascritp-->
   <script defer src="js/face-api.min.js"></script>
   <script defer src="js/script.js"></script>
   <script src="https://kit.fontawesome.com/da4c88c6a6.js" crossorigin="anonymous"></script>
 </body>
+
+<!-- Javascritp for Firebase server (not that much that's why wrote it in the HTML file only) -->
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
 <script>
+
+  // Firebase configuration (imp details)
   var firebaseConfig = {
     apiKey: "AIzaSyCBudhxLqtBCxU1EfBP7cz-Idnk1UB6Pr8",
     authDomain: "face-exe.firebaseapp.com",
@@ -76,10 +95,11 @@
   firebase.initializeApp(firebaseConfig);
   console.log(firebase);
 
+  // Image upload to firebase function
   function uploadImage() {
     const ref = firebase.storage().ref();
     const file = document.querySelector("#photo").files[0];
-    const name = +new Date() + "-" + file.name;
+    const name = file.name;
     const metadata = {
       contentType: file.type
     };

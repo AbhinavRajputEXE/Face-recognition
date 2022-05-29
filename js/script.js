@@ -17,6 +17,9 @@ Promise.all([
   faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
 ]).then(start)
 
+/* Function to draw canvas, lesten to click event, append selected image into 
+canvas, draw box on faces with the names of person from the trainded modeles */
+
 async function start() {
   const container = document.getElementById('canvas2')
   container.style.position = 'relative'
@@ -46,6 +49,7 @@ async function start() {
     const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+    // Drawing boxes
     results.forEach((result, i) => {
       const box = resizedDetections[i].detection.box
       const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString(), boxColor: 'green' })
@@ -54,12 +58,15 @@ async function start() {
   })
 }
 
+/* It matches the name from array/database to the name of the models to mark correct names in the image */
+
 function loadLabeledImages() {
-  const labels = ['black_widow','captian_america','thor','tony_stark','hawkeye','captian_marvel','jim_rhodes']
+  const labels = ['leonardo','robert_pattinson','chris_evans','tom_cruse']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
       for (let i = 1; i <= 2; i++) {
+        /* Fetching image from the firebase bucket */
         const img = await faceapi.fetchImage(`https://storage.googleapis.com/face-exe.appspot.com/${label}.jpeg`)
         const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
         descriptions.push(detections.descriptor)
@@ -85,8 +92,6 @@ function startVideo() {
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video)
   document.getElementById("face").append(canvas)
-  // let width = document.getElementById("video").style.width;
-  // let x = parseInt(width, 10)
   var element = document.getElementById('video'),
         style = window.getComputedStyle(element),
         val = style.getPropertyValue('width'),
@@ -112,6 +117,7 @@ setInterval(async()=>{
     let angry = detect[0].expressions.angry
     let surprised = detect[0].expressions.surprised
     let happy = detect[0].expressions.happy
+
     /* Jokes Array */
     let jokeArray = [
       "Why do we tell actors to break a leg?....Because every play has a cast.",
@@ -124,6 +130,9 @@ setInterval(async()=>{
       "What do you call a Frenchman wearing sandals? Phillipe Phillope.",
       "Where do you find a cow with no legs? Right where you left it."
   ];
+
+    /* Contitions that update the textarea text and background color according to the face expression */
+
     if(sad>=0.7) {
       document.getElementById("joke").style.background='rgba(215, 208, 19, 0.486)';
       document.getElementById("joke").innerHTML = "Why are you sad? 😟 here is joke to cheer you up!! <br>" + jokeArray[Math.floor(Math.random() * jokeArray.length)];}
@@ -142,6 +151,7 @@ setInterval(async()=>{
 },5000)
 
 /* DARK MODE CODE */
+
 const chk = document.getElementById('chk');
 
 chk.addEventListener('change', () => {
