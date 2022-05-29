@@ -40,3 +40,5 @@ Dark mode:
 Hosted website link: https://faceexe.netlify.app/ (open in Google Chrome)
 
 Firebase Index: https://storage.googleapis.com/face-exe.appspot.com/
+
+Demo video: https://youtu.be/NsUxctK9Ulo
