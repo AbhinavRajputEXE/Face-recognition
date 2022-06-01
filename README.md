@@ -36,8 +36,21 @@ Below are some screenshots of the app:
 Dark mode:
 <img width="1440" alt="Screenshot 2022-05-30 at 00 01 57" src="https://user-images.githubusercontent.com/80591258/170886117-c0472005-9e0c-435f-9d9d-95ccd560c521.png">
 
+### Proof of Firebase working:
 
-Hosted website link: https://faceexe.netlify.app/ (open in Google Chrome)
+Function in this screenshot is responsible for uploading files to bucket and rename them and make a database entry with the file name to use it later.
+
+<img width="677" alt="Screenshot 2022-06-01 at 20 48 16" src="https://user-images.githubusercontent.com/80591258/171440471-95b166ca-1d55-4d3c-99c4-8024cfd932ea.png">
+
+Screenshots of firebase bucket and realtime database:
+
+![Screenshot 2022-06-01 at 20 54 33](https://user-images.githubusercontent.com/80591258/171441157-910db389-7408-4059-8efc-12f26c6b1986.png)
+
+
+<img width="1175" alt="Screenshot 2022-06-01 at 20 49 22" src="https://user-images.githubusercontent.com/80591258/171440593-f2cdc42d-375d-4003-8e7d-3039427705c4.png">
+
+
+Hosted website link: https://faceexe.netlify.app/ (Please open in Google Chrome)
 
 Firebase Index: https://storage.googleapis.com/face-exe.appspot.com/
 
