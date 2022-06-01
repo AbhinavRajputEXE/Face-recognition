@@ -13,18 +13,19 @@ Features:
 
 ***Note:*** 
 
->  - *It is hosted on free hosting service so it might be little slow    sometimes, PLEASE always use Google chrome for the best 			  results
-> and less wait*
+>  - *It is hosted on a FREE hosting service (netlify) so it might be little slow    sometimes, PLEASE always use Google chrome for the best 			  results
+> and less wait.*
 >    
->  - *Currently the Image upload and train model functionality is not working, although you can successfully upload the images using upload
-> functionality but it won't update that in database, currently I have
-> stored it locally in an array insted of database. In order to test the
-> Select image button functionality just select the sample images given
-> in image folder. or use the photos of following actors from the
-> internet.  list: ['leonardo de caprio', 'robert pattinson', 'chris
-> evans', 'tom cruse', 'robert downey', 'johnny depp', 'will smith']*
+>  - *Currently the realtime database functionality is not working, although you can successfully upload the images to train model using "upload button"
+> and it'll update that in database too but currently it can't read from database, that's why I have
+> stored it locally for now in an array too. So please in order to test the
+> "Select image" button functionality just please select the sample images given
+> in image folder. or use any of your own photos of following actors from the
+> internet.  list: [leonardo de caprio, robert pattinson, chris
+> evans, tom cruse, robert downey, johnny depp, will smith]*. If you want to upload image of your own favourit actor to firebase regardless to train their model and see if it actually works or not, just manually add the exact name of that actor as in the file name that you uploaded just without extention in the array locally, which on line number 106 of script.js 😔 Sorry for this inconvenience but I'm working to fix this problem ASAP.
 >  - *Because of time and money constrains this functionality was not completed but it is very easy to do and can be easly done by switching
-> to the premium firebase plan.*
+> to the premium firebase plan and giving it little bit more time.*
+
 
 Below are some screenshots of the app:
 <img width="1440" alt="Screenshot 2022-05-29 at 23 59 11" src="https://user-images.githubusercontent.com/80591258/170886024-bfeb3040-cd1d-4c42-b908-1c23bd82292a.png">
